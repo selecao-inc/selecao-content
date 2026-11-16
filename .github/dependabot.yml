@@ -1,0 +1,27 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      timezone: Asia/Tokyo
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+    ignore:
+      # @types/node のメジャー版は package.json の engines.node（24.x）に合わせる。
+      # Node 本体を上げるときに、この ignore も見直す
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+    labels: [dependencies]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      timezone: Asia/Tokyo
+    labels: [dependencies]
+
+  # terraform（/infra）は infra/ を追加する PR で足す
